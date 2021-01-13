@@ -4,16 +4,30 @@
       <div class="avator_box">
         <img src="../assets/yuxi.jpg" />
       </div>
-      <el-form ref="form" :model="form" label-width="0px" class="login_form">
+      <el-form
+        ref="loginForm"
+        :model="loginForm"
+        label-width="0px"
+        class="login_form"
+        :rules="rules"
+      >
         <el-form-item>
-          <el-input v-model="form.name" placeholder="请输入用户名"></el-input>
+          <el-input
+            prefix-icon="iconfont icon-user"
+            v-model="loginForm.username"
+            placeholder="请输入用户名"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.name" placeholder="请输入密码"></el-input>
+          <el-input
+            prefix-icon="iconfont icon-mima"
+            v-model="loginForm.password"
+            placeholder="请输入密码"
+          ></el-input>
         </el-form-item>
         <el-form-item class="btns">
           <el-button type="primary" @click="onSubmit">登录</el-button>
-          <el-button>取消</el-button>
+          <el-button @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -25,11 +39,29 @@ export default {
   data() {
     return {
       //表单数据
-      form: {},
+      loginForm: {},
+      //校验
+      rules: {
+        username: [
+          { required: true, message: "用户名不能为空", trigger: "blur" },
+        ],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      },
     };
   },
   methods: {
-    onSubmit() {},
+    //提交登录
+    onSubmit() {
+      this.$refs["loginForm"].validate((valid) => {
+        if (valid) {
+          console.log(this.loginForm);
+        }else{
+          console.log("HHHHHHHHHHHHHHHHHHHH")
+        }
+      });
+    },
+    //重置
+    reset() {},
   },
 };
 </script>
