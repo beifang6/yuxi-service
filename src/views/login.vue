@@ -11,14 +11,14 @@
         class="login_form"
         :rules="rules"
       >
-        <el-form-item>
+        <el-form-item prop="username">
           <el-input
             prefix-icon="iconfont icon-user"
             v-model="loginForm.username"
             placeholder="请输入用户名"
           ></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="password">
           <el-input
             prefix-icon="iconfont icon-mima"
             v-model="loginForm.password"
@@ -27,13 +27,15 @@
         </el-form-item>
         <el-form-item class="btns">
           <el-button type="primary" @click="onSubmit">登录</el-button>
-          <el-button @click="reset">重置</el-button>
+          <el-button type="info" @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
 <script>
+import { getUser } from "../api/login";
+import { getOrder } from "../api/login1";
 export default {
   name: "Login",
   data() {
@@ -54,14 +56,23 @@ export default {
     onSubmit() {
       this.$refs["loginForm"].validate((valid) => {
         if (valid) {
-          console.log(this.loginForm);
-        }else{
-          console.log("HHHHHHHHHHHHHHHHHHHH")
+          console.log("发起登录");
+          // this.$store.dispatch("Login",this.loginForm).then(response=>{
+          //   console.log(response)
+          // })
+          getUser().then((response) => {
+            console.log(response);
+          });
         }
       });
     },
     //重置
-    reset() {},
+    reset() {
+      //this.$refs.loginForm.resetFields();
+      getOrder().then(response=>{
+        console.log(response)
+      })
+    },
   },
 };
 </script>
